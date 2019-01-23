@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Leaflet Map</title>
+    <meta charset="utf-8" />
+    <link 
+        rel="stylesheet" 
+        href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css"
+    />
+</head>
+<body>
+    <div id="map" style="width: 100%;height:600px;"></div>
+
+    <script
+        src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
+    </script>
+
+    <script>
+        var greenIcon = L.icon({
+    iconUrl: 'http://saurabhsolkar.ml/photowebapp/images/sea1.jpg',
+    
+
+    iconSize:     [38, 95], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+var geojsonFeature = {
+    "type": "Feature",
+    "properties": {
+        "name": "Coors Field",
+        "amenity": "Baseball Stadium",
+        "popupContent": "This is where the Rockies play!"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [17.7546, 73.4062]
+    }
+};
+/*
+var latlngs = [
+    [18.765588918318805, 73.40695381164552],
+    [18.76357751947567,73.41255426406862],
+    [18.757421270933612, 73.41145992279054],
+    [18.765588918318805, 73.40695381164552]
+];
+
+*/
+        var map = L.map('map').setView([18.743946,73.481556], 16);
+        mapLink = 
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+            }).addTo(map);
+        //    var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+
+          
+map.on('click',function(e){
+alert(e.latlng);
+var latlngs16 = [
+    [18.743946,73.481556],
+    [e.latlng.lat,e.latlng.lng]
+];
+
+var polyline = L.polyline(latlngs16, {color: 'red'}).addTo(map);
+L.marker( [e.latlng.lat,e.latlng.lng]).addTo(map);
+polyline.addTo(map);
+var distance = getDistance([18.743946,73.481556],[e.latlng.lat,e.latlng.lng])
+alert(distance);
+var popup = L.popup()
+    .setLatLng(e.latlng)
+    .setContent('<p>distance id </p>'+distance)
+    .openOn(map);
+});
+
+
+            L.marker([18.743946,73.481556]).addTo(map);
+
+
+
+            function getDistance(origin, destination) {
+    // return distance in meters
+    var lon1 = toRadian(origin[1]),
+        lat1 = toRadian(origin[0]),
+        lon2 = toRadian(destination[1]),
+        lat2 = toRadian(destination[0]);
+
+    var deltaLat = lat2 - lat1;
+    var deltaLon = lon2 - lon1;
+
+    var a = Math.pow(Math.sin(deltaLat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon/2), 2);
+    var c = 2 * Math.asin(Math.sqrt(a));
+    var EARTH_RADIUS = 6371;
+    return c * EARTH_RADIUS * 1000;
+}
+function toRadian(degree) {
+    return degree*Math.PI/180;
+}
+
+    </script>
+</body>
+</html>
