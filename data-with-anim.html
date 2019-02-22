@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Leaflet Map</title>
+    <meta charset="utf-8" />
+   
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <style>
+      .gps_ring {	
+		border: 3px solid #999;
+		 -webkit-border-radius: 30px;
+		 height: 150px;
+		 width: 150px;		
+	    -webkit-animation: pulsate 1s ease-out;
+	    -webkit-animation-iteration-count: infinite; 
+	    /*opacity: 0.0*/
+	}
+    #map {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+
+@keyframes fade { 
+  from { radius:10 } 
+}
+
+@-webkit-keyframes pulsate {
+		    0% { opacity: 0.0;}
+		    50% {opacity: 1.0;}
+		    100% { opacity: 0.0;}
+	}
+
+.blinking {
+  animation: pulsate 1s infinite alternate;
+}
+    </style>
+</head>
+<body>
+    <div id="map" style="width: 100%;height:600px;"></div>
+
+    <script
+        src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js">
+    </script>
+
+    <script>
+        var map = L.map('map').setView([18.757421270933612, 73.41145992279054], 17);
+      
+        mapLink = 
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 17,
+            }).addTo(map);
+
+            L.circleMarker([18.757421270933612, 73.41145992279054],{radius:40,className: 'blinking'}).addTo(map);
+          
+		
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>A Leaflet map!</title>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+<style>
+#map {
+width: 960px;
+height: 500px;
+}
+</style>
+
+
+<script>
+$(document).ready(function(){
+
+
+   var map = L.map('map').setView([18.75, 73.40], 2);
+      
+      mapLink = 
+          '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+      L.tileLayer(
+          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; ' + mapLink + ' Contributors',
+          maxZoom: 18,
+          }).addTo(map);
+
+   var data = {
+    "type": "Feature",
+    "properties": {
+        "name": "Coors Field",
+        "amenity": "Baseball Stadium",
+        "popupContent": "This is where the Rockies play!"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [18.75423, 73.40213]
+    }
+};
+
+var myLines = [{
+    "type": "LineString",
+    "coordinates": [[-100, 40], [-105, 45], [-110, 55]]
+}, {
+    "type": "LineString",
+    "coordinates": [[-105, 40], [-110, 45], [-115, 55]]
+}];
+
+/*
+   $.getJSON("rodents.geojson",function(data){
+  alert(data);
+  L.geoJson(data).addTo(map);
+  }); 
+
+*/
+
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.popupContent);
+    }
+}
+
+var geojsonFeature = {
+    "type": "Feature",
+    "properties": {
+        "name": "Coors Field",
+        "amenity": "Baseball Stadium",
+        "popupContent": "This is where the Rockies play!"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [18.75423, 73.40213]
+    }
+};
+
+var someFeatures = [{
+    "type": "Feature",
+    "properties": {
+        "name": "Coors Field",
+        "show_on_map": true
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-104.99404, 39.75621]
+    }
+}, {
+    "type": "Feature",
+    "properties": {
+        "name": "Busch Field",
+        "show_on_map": true
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-103.98404, 39.74621]
+    }
+}];
+
+
+var layer = L.geoJson(someFeatures).addTo(map);
+
+
+
+});
+</script>
+
+</head>
+
+<body>
+<div id="map"></div>
+
+
+</body>
+</html>

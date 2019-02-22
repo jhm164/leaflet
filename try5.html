@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet mobile example</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		html, body, #map {
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+	<style>
+	
+	.css-icon {
+
+	}
+
+	.gps_ring {	
+		border: 3px solid #999;
+		 -webkit-border-radius: 30px;
+         height: 18px;
+		 width: 18px;			
+	    -webkit-animation: pulsate 1s ease-out;
+	    -webkit-animation-iteration-count: infinite; 
+	    /*opacity: 0.0*/
+	}
+	
+	@-webkit-keyframes pulsate {
+		    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+            100% {-webkit-transform: scale(5.0, 15.0); opacity: 0.0;}
+		    50% {opacity: 1.0;}
+            
+            75% {-webkit-transform: scale(8.0, 8.0); opacity: 0.0;}
+		    100% {-webkit-transform: scale(10.0, 10.0); opacity: 0.0;}
+	}
+	</style>
+	<div id="map"></div>
+
+	<script>
+		var map = L.map('map').setView([18.757421270933612, 73.41145992279054], 17);
+
+		// create a tile layer sourced from mapbox
+		L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);	
+
+		L.marker([18.757421270933612, 73.41145992279054]).addTo(map);
+
+		map.setView([18.757421270933612, 73.41145992279054]);
+
+		// Define an icon called cssIcon
+		var cssIcon = L.divIcon({
+		  // Specify a class name we can refer to in CSS.
+		  className: 'css-icon',
+		  html: '<div class="gps_ring"></div>'
+		  // Set marker width and height
+		  ,iconSize: [22,22]
+		  // ,iconAnchor: [11,11]
+		});
+
+		// Create three markers and set their icons to cssIcon
+		L.marker([18.757421270933612, 73.41145992279054], {icon: cssIcon}).addTo(map);
+		
+	</script>
+</body>
+</html>
